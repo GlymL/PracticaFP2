@@ -63,4 +63,8 @@
   <ItemGroup>
     <None Include="datos.in" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="test1_visible.txt" />
+    <Text Include="test3.txt" />
+  </ItemGroup>
 </Project>

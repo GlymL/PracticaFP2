@@ -34,30 +34,35 @@ void mostrar_resultado(const tJuego& juego) {
         cout << "Has abandonado la partida." << endl;
 }
 
+istream& operator>> (istream& in, tJuego& juego) {
+    int f, c;
+    in >> f >> c;
+    inicializar(juego, f, c); // lee e inicializa filas y columnas
+    int num_minas;
+    in >> num_minas;
+    for (int i = 0; i < num_minas; i++) { // for para leer todas las minas
+        int f, c;
+        in >> f >> c; // las minas añaden +1 a num_minas, asi que
+        poner_mina(juego, f, c); // no hace falta inicializar el valor aquí
+    }
+    return in;
+}
+
 bool carga_juego(tJuego& juego) {
     cout << "Escriba el nombre del fichero donde se encuentra la partida: ";
+    bool abrirFichero = false; // presupone un error en la apertura. Si no se abre -> false
     string nombre_fichero;
     cin >> nombre_fichero;
     ifstream fichero;
-    fichero.open(nombre_fichero);
-    if (fichero.is_open()) {
-        int f, c;
-        fichero >> f >> c;
-        inicializar(juego, f, c);
-        int num_minas;
-        fichero >> num_minas;
-        juego.num_minas = num_minas;
-        for (int i = 0; i < num_minas; i++) {
-            int f, c;
-            fichero >> f >> c;
-            poner_mina(juego, f, c);
-        }
+    fichero.open(nombre_fichero); // abre fichero
+    if (fichero.is_open()) { // si esta abierto
+        fichero >> juego;
         fichero.close();
-        return true;
+        abrirFichero = true; // Si el archivo está bien abierto, lo cambia
     }
-    else
-        return false;
+    return abrirFichero; // devuelve el bool. O un error de apertura, o la apertura correcta
 }
+
 
 void color_numero(int numero) {
     switch (numero) {

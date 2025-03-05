@@ -85,6 +85,7 @@ void poner_mina(tJuego& juego, const int fila, const int columna) {
                     }
                     poner_celda(juego.tablero, i, j, celda);
                 }
+        juego.num_minas++;
     }
 }
 
@@ -106,6 +107,7 @@ void ocultar(tJuego& juego, const int fila, const int columna) {
         tCelda celda = dame_celda(juego.tablero, fila, columna);
         ocultar_celda(celda);
         poner_celda(juego.tablero, fila, columna, celda);
+        juego.num_descubiertas--;
     }
 }
 
@@ -119,8 +121,8 @@ void juega(tJuego& juego, int fila, int columna, tListaPosiciones& lista_pos) {
         insertar_final(lista_pos, fila, columna); // añade la pos a la lista de posiciones descubiertas
         poner_celda(juego.tablero, fila, columna, c);
         if (esta_vacia(c)) { // si esta vacía
-            for (int i = fila - 1; i < fila + 1; i++)
-                for (int j = columna - 1; j < columna + 1; j++) {  // descubre y añade el resto
+            for (int i = fila - 1; i <=  fila + 1; i++)
+                for (int j = columna - 1; j <= columna + 1; j++) {  // descubre y añade el resto
                     tCelda celda = dame_celda(juego.tablero, i, j);
                     if ((i != fila || j != columna) && !es_visible(celda) && !esta_marcada(celda)) {
                         descubrir_celda(celda);
