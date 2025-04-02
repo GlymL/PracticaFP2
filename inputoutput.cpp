@@ -18,7 +18,18 @@ void mostrar_cabecera() {
 
 void pedir_pos(int& fila, int& columna) {
     cout << "Introduce la fila y la columna: ";
-    cin >> fila >> columna;
+    string f, c;
+    cin >> f >> c;
+    while (!all_of(f.begin(), f.end(), isdigit) || !all_of(c.begin(), c.end(), isdigit)){
+        cout << "Numero no valido. Introduce un numero: ";
+        f = "";
+        c = "";
+        cin >> f >> c;
+        cin.ignore();
+    }
+    cin.ignore();
+    fila = stoi(f);
+    columna = stoi(c);
 }
 
 void mostrar_resultado(const tJuego& juego) {
@@ -27,7 +38,7 @@ void mostrar_resultado(const tJuego& juego) {
             cout << "Has explotado una mina. Has perdido." << endl;
         }
         else {
-            cout << "¡Enhorabuena! Has ganado." << endl;
+            cout << "Â¡Enhorabuena! Has ganado." << endl;
         }
     }
     else
@@ -42,8 +53,8 @@ istream& operator>> (istream& in, tJuego& juego) {
     in >> num_minas;
     for (int i = 0; i < num_minas; i++) { // for para leer todas las minas
         int f, c;
-        in >> f >> c; // las minas añaden +1 a num_minas, asi que
-        poner_mina(juego, f, c); // no hace falta inicializar el valor aquí
+        in >> f >> c; // las minas aÃ±aden +1 a num_minas, asi que
+        poner_mina(juego, f, c); // no hace falta inicializar el valor aquÃ­
     }
     return in;
 }
@@ -58,7 +69,7 @@ bool carga_juego(tJuego& juego) {
     if (fichero.is_open()) { // si esta abierto
         fichero >> juego;
         fichero.close();
-        abrirFichero = true; // Si el archivo está bien abierto, lo cambia
+        abrirFichero = true; // Si el archivo estÃ¡ bien abierto, lo cambia
     }
     return abrirFichero; // devuelve el bool. O un error de apertura, o la apertura correcta
 }
@@ -121,7 +132,7 @@ void mostrar_celda(tJuego& juego, int fila, int columna) {
 
 void mostrar_juego_consola(tJuego& juego) {
 
-    // mostrar el número de jugadas del juego
+    // mostrar el nÃºmero de jugadas del juego
     cout << "\tJugadas: " << dame_num_jugadas(juego) << endl;
 
     // mostrar cabecera
